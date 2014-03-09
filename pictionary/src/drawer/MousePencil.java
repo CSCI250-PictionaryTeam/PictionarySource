@@ -1,25 +1,19 @@
 package drawer;
 
-import java.awt.Color;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 public class MousePencil implements MouseMotionListener {
-	private Canvas v;
+	private DrawingPanel v;
 	private boolean isDrawing;
-	private int size = 20; //default
-	public Color c;
-	private final int erasersize = 50;
-	private ArrayList<DrawPoint> updatePackage;
-	private DrawingEditor boss;
 	
-	public MousePencil(Canvas v, DrawingEditor boss) {
+	public MousePencil(DrawingPanel v) {
 		v.addMouseMotionListener(this);
 		this.v = v;
 		isDrawing = true;
-		this.boss = boss;
 	}
-		
+	
+	private Drawing d() {return v.getDrawing();}
+	
 	public boolean isDrawing() {
 		return isDrawing;
 	}
@@ -31,21 +25,31 @@ public class MousePencil implements MouseMotionListener {
 	public void erase() {
 		isDrawing = false;
 	}
-	//Here's how updates will likely go down. When mouse clicked, it starts building a new array of points to be sent up to the editor.
-	//The editor gets the list, puts everything into a string, and signals the tread that it is ready to hand over an update string.
-	//Still need a color encoding scheme...
 	
 	public void mouseDragged(MouseEvent e) {
-		DrawPoint point;
+		int x = e.getX() / v.xCell();
+		int y = e.getY() / v.yCell();
 		if(isDrawing){
-			point = new DrawPoint(e.getPoint(), size, c);
-			v.addDrawPoint(point);
+			d().set(x, y, isDrawing());
 		}else{
-			point = new DrawPoint(e.getPoint(), erasersize, Color.white);
-			v.addDrawPoint(point);
+			chunkyErase(x,y,4);
 		}
 		v.repaint();
 	}
-	
+	private void chunkyErase(int x, int y, int size){
+		for(int i = x-size; i < x+size+1; i++){
+			for(int j = y-3; j<y+4; j++){
+				d().set(i, j, isDrawing());
+			}
+		}
+	}
+	private void chunkyDraw(int x, int y, int size){
+		for(int i = x-size; i < x+size+1; i++){
+			for(int j = y-3; j<y+4; j++){
+				d().set(i, j, isDrawing());
+			}
+		}
+	}
+
 	public void mouseMoved(MouseEvent e) {}
 }
