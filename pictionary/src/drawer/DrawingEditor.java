@@ -18,6 +18,7 @@ public class DrawingEditor extends JPanel {
 	private Canvas view;
 	private JButton clear, draw, erase;
 	private JLabel whatToDraw;
+	private Color defaultColor;
 	
 //	private Drawing d() {return view.getDrawing();}
 	
@@ -61,14 +62,13 @@ public class DrawingEditor extends JPanel {
 		erase.setBorder(BorderFactory.createEmptyBorder());
 		erase.addActionListener(new Eraser());
 		erase.setToolTipText("Eraser");
-		erase.setContentAreaFilled(false);
 		
 		BufferedImage clearIcon = ImageIO.read(new File("black-white-metro-delete-icon.png"));
 		clear = new JButton(new ImageIcon(clearIcon));
 		clear.setBorder(BorderFactory.createEmptyBorder());
 		clear.addActionListener(new Clearer());
 		clear.setToolTipText("Clear Screen");
-		clear.setContentAreaFilled(false);
+		defaultColor = clear.getBackground();
 		
 		dataPanel.add(draw);
 		dataPanel.add(erase);
@@ -100,20 +100,16 @@ public class DrawingEditor extends JPanel {
 	private class Eraser implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			c.erase();
-			erase.setContentAreaFilled(true);
 			erase.setBackground(Color.yellow);
-			draw.setBackground(Color.white);
-			draw.setContentAreaFilled(false);
+			draw.setBackground(defaultColor);
 		}
 	}	
 	
 	private class Drawer implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			c.draw();
-			draw.setContentAreaFilled(true);
 			draw.setBackground(Color.yellow);
-			erase.setBackground(Color.white);
-			erase.setContentAreaFilled(false);
+			erase.setBackground(defaultColor);
 		}
 	}
 		
