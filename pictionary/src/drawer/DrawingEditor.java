@@ -15,11 +15,11 @@ import java.io.IOException;
 public class DrawingEditor extends JPanel {
 	private JLayeredPane lPane;
 	private MousePencil c;
-	private DrawingPanel view;
+	private Canvas view;
 	private JButton clear, draw, erase;
 	private JLabel whatToDraw;
 	
-	private Drawing d() {return view.getDrawing();}
+//	private Drawing d() {return view.getDrawing();}
 	
 	private Drawing makeNewDrawing() {return new Drawing(90, 90);}
 	
@@ -29,9 +29,9 @@ public class DrawingEditor extends JPanel {
 		
 		this.setLayout(new BorderLayout());
 		
-		view = new DrawingPanel(makeNewDrawing());
+		view = new Canvas();
 		view.setBounds(0, 0, 700, 700);
-		c = new MousePencil(view);
+		c = new MousePencil(view,  this);
 		
 		this.add(lPane, BorderLayout.CENTER);
 		lPane.add(view, new Integer(0), 0);
@@ -87,7 +87,7 @@ public class DrawingEditor extends JPanel {
 			
 	private class Clearer implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			view.resetDrawing(makeNewDrawing());
+			view.clear();
 		}
 	}
 	
