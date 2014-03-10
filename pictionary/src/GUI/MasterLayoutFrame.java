@@ -1,8 +1,11 @@
 package GUI;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.border.BevelBorder;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -17,7 +20,10 @@ public class MasterLayoutFrame extends JFrame{
 		setLayout(new FlowLayout());
 		
 		add(new LeftSidePanel());
-		add(new RightSidePanel());
+		RightSidePanel rightSide = new RightSidePanel();
+		rightSide.setBorder(BorderFactory.createLineBorder(Color.black));
+//		.createBevelBorder(BevelBorder.RAISED)
+		add(rightSide);
 		
 		pack();
 	}
