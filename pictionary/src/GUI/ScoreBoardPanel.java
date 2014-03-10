@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
+@SuppressWarnings("serial")
 public class ScoreBoardPanel extends JPanel{
 	private ArrayList<String> userList;
 	private ArrayList<Integer> scoreList;

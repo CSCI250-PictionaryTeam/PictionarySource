@@ -1,10 +1,7 @@
 package GUI;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -14,12 +11,14 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
+//the right side of the main GUI, it contains all the chat stuff.
+//Right now some stuff gets displayed by default, but that will all have to get replaced with something that implements a chatLog
 
 @SuppressWarnings("serial")
 public class RightSidePanel extends JPanel{
 	private JTextPane chatArea;
 	private JTextField chatEntryField;
-	private ArrayList<String> chatLog;
+//	private ArrayList<String> chatLog;
 	
 	public RightSidePanel(){
 		setPreferredSize(new Dimension(400, 700));
@@ -54,21 +53,10 @@ public class RightSidePanel extends JPanel{
 				}
 				chatEntryField.setText("");
 			}
-			
 		}
-
 		@Override
-		public void keyReleased(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void keyReleased(KeyEvent arg0) {}
 		@Override
-		public void keyTyped(KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
+		public void keyTyped(KeyEvent arg0) {}
 	}
-
 }

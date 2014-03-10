@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import drawer.DrawingEditor;
 
+//the left side of the main GUI with scoreboard and the drawer
 
 @SuppressWarnings("serial")
 public class LeftSidePanel extends JPanel{
@@ -26,5 +27,9 @@ public class LeftSidePanel extends JPanel{
 		
 		add(drawer);
 		add(scores);
+	}
+	
+	public void update(){
+		drawer.update();
 	}
 }
