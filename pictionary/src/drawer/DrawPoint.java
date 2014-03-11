@@ -14,8 +14,8 @@ public class DrawPoint {
 		color = c;
 	}
 	public DrawPoint(Point p, int size, Color c){
-		x = p.x;
-		y = p.y;
+		x = p.x - 15;
+		y = p.y - 15;
 		rad = size;
 		color = c;
 	}

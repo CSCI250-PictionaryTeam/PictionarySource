@@ -7,11 +7,12 @@ import java.util.ArrayList;
 public class MousePencil implements MouseMotionListener {
 	private Canvas v;
 	private boolean isDrawing;
-	private int size = 20; //default
+	private int size = 20; //default -- Sam: " I want to mess with this in gui"
 	public Color c;
 	private final int erasersize = 50;
 	private ArrayList<DrawPoint> updatePackage;
 	private DrawingEditor boss;
+	public boolean updateReady;
 	
 	public MousePencil(Canvas v, DrawingEditor boss) {
 		v.addMouseMotionListener(this);
@@ -40,11 +41,17 @@ public class MousePencil implements MouseMotionListener {
 		if(isDrawing){
 			point = new DrawPoint(e.getPoint(), size, c);
 			v.addDrawPoint(point);
+//			updatePackage.add(point);
 		}else{
 			point = new DrawPoint(e.getPoint(), erasersize, Color.white);
 			v.addDrawPoint(point);
+//			updatePackage.add(point);
 		}
 		v.repaint();
+	}
+	public void mouseReleased(MouseEvent e){
+		updateReady = true;
+		System.out.println("update set true");
 	}
 	
 	public void mouseMoved(MouseEvent e) {}
