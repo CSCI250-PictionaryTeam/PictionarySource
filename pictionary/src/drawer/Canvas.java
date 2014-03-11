@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Canvas extends JPanel {
 	private ArrayList<DrawPoint> toDraw;
 	

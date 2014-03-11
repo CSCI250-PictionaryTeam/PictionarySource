@@ -18,7 +18,6 @@ public class MousePencil implements MouseMotionListener {
 		this.v = v;
 		isDrawing = true;
 		this.boss = boss;
-		c = Color.BLACK;
 	}
 		
 	public boolean isDrawing() {
