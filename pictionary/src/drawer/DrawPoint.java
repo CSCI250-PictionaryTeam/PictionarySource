@@ -12,7 +12,6 @@ public class DrawPoint {
 		this.y = y;
 		rad = radius;
 		color = c;
-		System.out.println(c.toString());
 	}
 	public DrawPoint(Point p, int size, Color c){
 		x = p.x - 15;
@@ -20,23 +19,18 @@ public class DrawPoint {
 		rad = size;
 		color = c;
 	}
-	public DrawPoint(String s){
-		String[] all = s.split("-");
-		System.out.println(all[0] + "wtf");
-		this.rad = Integer.parseInt(all[0]);
-		this.x = Integer.parseInt(all[1]);
-		this.y = Integer.parseInt(all[2]);
-		this.color = Color.getColor(all[2]);
+	public DrawPoint(String s, Color color){
+		String[] all = s.split("|");
+		this.rad = (int) Integer.parseInt(all[0]);
+		this.x = (int) Integer.parseInt(all[1]);
+		this.y = (int) Integer.parseInt(all[2]);
+		this.color = color;
 		
 	}
-	@Override
+	
 	public String toString(){ //we can work on this
 		String updateSafe = new String();
-		updateSafe = "&" + rad + "-" + x + "-" + y + "-" + String.valueOf(color.getRGB());
+		updateSafe = "&" + rad + "|" + x + "|" + y + "|" /*+ color.toString()*/;
 		return updateSafe;
-	}
-	@Override
-	public int hashCode(){
-		return this.toString().hashCode();
 	}
 }

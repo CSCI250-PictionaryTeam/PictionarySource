@@ -2,6 +2,7 @@ package drawer;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -9,7 +10,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
 	private ArrayList<DrawPoint> toDraw;
-
+	
 	
 	public Canvas(){
 		super();
@@ -32,11 +33,14 @@ public class Canvas extends JPanel {
 		toDraw.add(d);
 		repaint();
 	}
-	public void addDrawString(String s){ //encode scheme =  & DrawPoint.toString() & DrawPoint.toString() & etc...
-
-		String[] all = s.split("&");
-		for(int i = 1; i < all.length; i++){
-			toDraw.add(new DrawPoint(all[i]));
+	public void addDrawString(String s){ //encode scheme =  int :  & DrawPoint.toString() & DrawPoint.toString() & etc...
+		String[] first = s.split(":");
+		
+		Color color = stringToColor(first[0]);//needs an edit
+		
+		String[] all = first[1].split("&");
+		for(String buildString : all){
+			toDraw.add(new DrawPoint(buildString, color));
 		}
 	}
 	public Color stringToColor(String s){
