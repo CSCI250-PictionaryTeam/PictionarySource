@@ -29,7 +29,11 @@ public class LeftSidePanel extends JPanel{
 		add(scores);
 	}
 	
-	public void update(){
-		drawer.update();
+	public void refresh(){
+		drawer.refresh();
+	}
+	
+	public void setDrawer(boolean isDrawer){
+		drawer.setDrawer(isDrawer);
 	}
 }
