@@ -8,13 +8,14 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Canvas extends JPanel {
-	private ArrayList<DrawPoint> toDraw;
-
+	ArrayList<DrawPoint> toDraw;
+//	HashSet<DrawPoint> toDraw;
 	
 	public Canvas(){
 		super();
 		setBackground(Color.white);
 		toDraw = new ArrayList<DrawPoint>();
+//		toDraw = new HashSet<DrawPoint>();
 	}
 	
 	public void paintComponent(Graphics g){
@@ -26,6 +27,7 @@ public class Canvas extends JPanel {
 	}
 	public void clear(){
 		toDraw = new ArrayList<DrawPoint>();
+//		toDraw = new HashSet<DrawPoint>();
 		repaint();
 	}
 	public void addDrawPoint(DrawPoint d){
@@ -33,8 +35,7 @@ public class Canvas extends JPanel {
 		repaint();
 	}
 	public void addDrawString(String s){ //encode scheme =  & DrawPoint.toString() & DrawPoint.toString() & etc...
-
-		String[] all = s.split("&");
+		String[] all = s.split("\\&");
 		for(int i = 1; i < all.length; i++){
 			toDraw.add(new DrawPoint(all[i]));
 		}

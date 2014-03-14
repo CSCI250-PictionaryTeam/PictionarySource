@@ -1,22 +1,22 @@
-package ChatStuff;
+package drawer;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class ChatThread extends Thread {
+public class UpdateThread extends Thread {
 	private String msg, host;
 	private int port;
 	private boolean going;
 	private Socket s;
 	private ArrayBlockingQueue<String> chatQueue;
 
-	public ChatThread(String msg, String host, Integer port, ArrayBlockingQueue<String> chatQueue) {
-		this.msg = msg;
+	public UpdateThread(String drawingUpdate, String host, Integer port, ArrayBlockingQueue<String> updateQueue) {
+		this.msg = drawingUpdate;
 		this.host = host;
 		this.port = port;
-		this.chatQueue = chatQueue;
+//		this.chatQueue = chatQueue;
 		going = true;
 	}
 
@@ -40,7 +40,7 @@ public class ChatThread extends Thread {
 			try {
 				if (s != null) {s.close();}
 			} catch (IOException ioe) {
-				System.out.println("error closing image update socket");
+				System.out.println("error closing socket");
 			}
 		}		
 	}
@@ -49,3 +49,5 @@ public class ChatThread extends Thread {
 		going = false;
 	}
 }
+
+

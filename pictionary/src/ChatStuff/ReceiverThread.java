@@ -30,5 +30,4 @@ public class ReceiverThread extends Thread {
 		going = false;
 		Connection.close();
 	}
-
 }

@@ -5,18 +5,19 @@ import java.util.ArrayList;
 public class Updater {
 	
 	private ArrayList<DrawPoint> outgoingNotReady;
-	private String send;
+	StringBuilder toSend;
 	private boolean ready;
 	
 	public Updater(){
 		outgoingNotReady = new ArrayList<DrawPoint>();
 		ready = false;
-		send = "";
+		toSend = new StringBuilder();
 	}
 	public void readyUp() {
 		for(DrawPoint point: outgoingNotReady){
-			send.concat(point.toString());
+			toSend.append(point.toString());
 		}
+		outgoingNotReady = new ArrayList<DrawPoint>();
 		System.out.println("Readied up");
 		ready = true;
 	}
@@ -27,5 +28,17 @@ public class Updater {
 		System.out.println("Receieved: " +dp.toString());
 		outgoingNotReady.add(dp);
 	}
+	public String getUpdate(){
+		String result = toSend.toString();
+		clearSend();
+		ready = false;
+		return result;
+	}
+	private void clearSend(){
+		toSend = new StringBuilder();
+	}
 	//NEEDS TO BE ABLE TO BLAST OUT AN UPDATE!
+	private void dispatch(){
+		
+	}
 }

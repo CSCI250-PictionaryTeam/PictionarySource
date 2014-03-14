@@ -1,6 +1,7 @@
 package drawer;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.*;
 
 public class MousePencil implements MouseListener, MouseMotionListener {
@@ -33,27 +34,26 @@ public class MousePencil implements MouseListener, MouseMotionListener {
 	public void erase() {
 		isDrawing = false;
 	}
-//	public write(){
-//		
-//	}
-	//Here's how updates will likely go down. When mouse clicked, it starts building a new array of points to be sent up to the editor.
-	//The editor gets the list, puts everything into a string, and signals the tread that it is ready to hand over an update string.
-	//Still need a color encoding scheme...
+	private DrawPoint prepPoint(Point p){
+		DrawPoint point;
+		if(isDrawing){
+			point = new DrawPoint(p, size, c);
+			v.addDrawPoint(point);
+		}else{
+			point = new DrawPoint(p, erasersize, Color.white);
+			v.addDrawPoint(point);
+		}
+		return point;
+	}
+
 	@Override
 	public void mouseReleased(MouseEvent e){
+		System.out.println("released");
 		updateReady = true;
-		System.out.println(updateReady);
 		update.readyUp();
 	}
 	public void mouseDragged(MouseEvent e) {
-		DrawPoint point;
-		if(isDrawing){
-			point = new DrawPoint(e.getPoint(), size, c);
-			v.addDrawPoint(point);
-		}else{
-			point = new DrawPoint(e.getPoint(), erasersize, Color.white);
-			v.addDrawPoint(point);
-		}
+		DrawPoint point = prepPoint(e.getPoint());
 		update.addPoint(point);
 		v.repaint();
 	}
@@ -61,35 +61,16 @@ public class MousePencil implements MouseListener, MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		DrawPoint point;
-		if(isDrawing){
-			point = new DrawPoint(e.getPoint(), size, c);
-			v.addDrawPoint(point);
-		}else{
-			point = new DrawPoint(e.getPoint(), erasersize, Color.white);
-			v.addDrawPoint(point);
-		}
-		update.addPoint(point);
-		v.repaint();
-		update.readyUp();
-	}
+	public void mouseClicked(MouseEvent e) {}
 	@Override
 	public void mouseEntered(MouseEvent e) {}
 	@Override
 	public void mouseExited(MouseEvent e) {}
 	@Override
 	public void mousePressed(MouseEvent e) {
-		DrawPoint point;
-		if(isDrawing){
-			point = new DrawPoint(e.getPoint(), size, c);
-			v.addDrawPoint(point);
-		}else{
-			point = new DrawPoint(e.getPoint(), erasersize, Color.white);
-			v.addDrawPoint(point);
-		}
+		System.out.println("Pressed");
+		DrawPoint point = prepPoint(e.getPoint());
 		update.addPoint(point);
 		v.repaint();
 	}
-
 }
