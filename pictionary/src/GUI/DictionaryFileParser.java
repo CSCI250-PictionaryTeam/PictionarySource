@@ -12,7 +12,7 @@ public class DictionaryFileParser {
 	private String thisAnswer;
 	
 	DictionaryFileParser(String pathname) throws FileNotFoundException{
-		this.answerFile = new File(pathname);
+		this.answerFile = new File(dictionary.txt);
 		this.input = new Scanner(answerFile);
 		this.answers = new ArrayList<String>();
 	}
