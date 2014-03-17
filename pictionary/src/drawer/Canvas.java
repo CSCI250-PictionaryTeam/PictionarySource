@@ -39,6 +39,7 @@ public class Canvas extends JPanel {
 		for(int i = 1; i < all.length; i++){
 			toDraw.add(new DrawPoint(all[i]));
 		}
+		repaint();
 	}
 	public Color stringToColor(String s){
 		return Color.BLACK;

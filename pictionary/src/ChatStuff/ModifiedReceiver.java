@@ -1,18 +1,21 @@
 package ChatStuff;
 
-
-import java.net.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.concurrent.ArrayBlockingQueue;
-import java.io.*;
 
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
-public class Receiver extends Thread {
+import GUI.MasterLayoutFrame;
+
+public class ModifiedReceiver {
 	private ServerSocket accepter;
 	private ReceiverThread receiverThread;
 	private ArrayBlockingQueue<String> chatQueue,updateQueue;
+	private MasterLayoutFrame GUIBoss;
 	private JTextPane chatBox;
+	private final int port = 8888;
 
 	//note from Sam
 	//We may need to modify our receiver for 3 types of inputs
@@ -23,9 +26,10 @@ public class Receiver extends Thread {
 	// while drawing  messages get preceded with  :2:string
 	// and game state messages get preceded with  :3:string
 	
-	public Receiver(int port, JTextPane chatBox, ArrayBlockingQueue<String> chatQueue) throws IOException {
+	public ModifiedReceiver(MasterLayoutFrame GUIBoss) throws IOException {
 		this.chatQueue = chatQueue;
 		this.chatBox = chatBox;
+//		chatBox = GUIBoss.getchatbox
 		accepter = new ServerSocket(port);
 		System.out.println("Server IP address: " + accepter.getInetAddress());
 	}
@@ -34,7 +38,7 @@ public class Receiver extends Thread {
 		for (;;) {
 			Socket s = accepter.accept();
 			System.out.println("Connection accepted from " + s.getInetAddress());
-			receiverThread = new ReceiverThread(chatQueue, chatBox, s);
+			receiverThread = new ModifiedReceiverThread(chatQueue, updateQueue, GUIBoss, s);
 		}
 	}
 
@@ -49,6 +53,4 @@ public class Receiver extends Thread {
 			e.printStackTrace();
 		}
 	}
-
-
 }

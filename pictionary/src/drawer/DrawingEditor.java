@@ -46,7 +46,22 @@ public class DrawingEditor extends JPanel {
 
 		lPane = new JLayeredPane();
 		view = new Canvas();
-		pen = new MousePencil(view);
+		pen = new MousePencil(view, new ArrayList<String>());
+		lPane.add(view, new Integer(0), 0);
+		
+		addSideBar();
+		addWhatToPanel();
+		
+		this.add(lPane, BorderLayout.CENTER);
+	}
+	
+	public DrawingEditor(ArrayList<String> connectionsList) throws IOException {
+		this.setPreferredSize(CANVAS_PREFERRED_DIM);
+		this.setLayout(new BorderLayout());
+
+		lPane = new JLayeredPane();
+		view = new Canvas();
+		pen = new MousePencil(view, connectionsList);
 		lPane.add(view, new Integer(0), 0);
 		
 		addSideBar();
@@ -151,6 +166,10 @@ public class DrawingEditor extends JPanel {
 	
 	public void setDrawer(boolean isDrawer){
 		this.isDrawer = isDrawer;
+	}
+	
+	public Canvas getCanvas(){
+		return view;
 	}
 	
 	private JButton makeColorButton(String name, Color c) throws IOException{

@@ -6,12 +6,12 @@ public class Updater {
 	
 	private ArrayList<DrawPoint> outgoingNotReady;
 	StringBuilder toSend;
-	private boolean ready;
+	private ArrayList<String> hosts;
 	
-	public Updater(){
+	public Updater(ArrayList<String> hostList){
 		outgoingNotReady = new ArrayList<DrawPoint>();
-		ready = false;
-		toSend = new StringBuilder();
+		toSend = new StringBuilder("draw**e2$4j**");
+		hosts = hostList;
 	}
 	public void readyUp() {
 		for(DrawPoint point: outgoingNotReady){
@@ -19,10 +19,8 @@ public class Updater {
 		}
 		outgoingNotReady = new ArrayList<DrawPoint>();
 		System.out.println("Readied up");
-		ready = true;
-	}
-	public boolean isReady(){
-		return ready;
+		System.out.println("Dispatching to all");
+		dispatchToAll(toSend.toString(), hosts);
 	}
 	public void addPoint(DrawPoint dp){
 		System.out.println("Receieved: " +dp.toString());
@@ -30,15 +28,17 @@ public class Updater {
 	}
 	public String getUpdate(){
 		String result = toSend.toString();
-		clearSend();
-		ready = false;
+//		clearSend();
 		return result;
 	}
 	private void clearSend(){
-		toSend = new StringBuilder();
+		toSend = new StringBuilder("draw**e2$4j**");
 	}
 	//NEEDS TO BE ABLE TO BLAST OUT AN UPDATE!
-	private void dispatch(){
-		
+	private void dispatchToAll(String update, ArrayList<String> all){
+		for(String host: all){
+			UpdateSendThread out = new UpdateSendThread(update, host);
+			out.start();
+		}
 	}
 }

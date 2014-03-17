@@ -25,6 +25,7 @@ public class ReceiverThread extends Thread {
 		while (going) {
 			while (going && !responses.ready()) {}
 			String line = responses.readLine();
+			//THIS IS OUR DECODER
 			if (line != null) {chatQueue.put(line);}
 		}
 		going = false;

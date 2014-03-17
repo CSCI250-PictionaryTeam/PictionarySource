@@ -3,6 +3,7 @@ package drawer;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class MousePencil implements MouseListener, MouseMotionListener {
 	private Canvas v;
@@ -13,14 +14,14 @@ public class MousePencil implements MouseListener, MouseMotionListener {
 	public boolean updateReady;
 	private Updater update;
 	
-	public MousePencil(Canvas v) {
+	public MousePencil(Canvas v, ArrayList<String> host) {
 		v.addMouseMotionListener(this);
 		v.addMouseListener(this);
 		this.v = v;
 		c = Color.BLACK;
 		isDrawing = true;
 
-		update = new Updater();
+		update = new Updater(host);
 	}
 		
 	public boolean isDrawing() {

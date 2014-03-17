@@ -6,6 +6,8 @@ import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 
+import drawer.Canvas;
+
 import net.miginfocom.swing.MigLayout;
 
 //puts all of the panels on and contains the main
@@ -15,14 +17,14 @@ public class MasterLayoutFrame extends JFrame{
 	private LeftSidePanel leftSide;
 	private ChatSidePanel rightSide;
 	
-	public MasterLayoutFrame() throws IOException{
+	public MasterLayoutFrame(boolean isConnecting) throws IOException{
 		setTitle("P2P Pictionary");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.addComponentListener(new Resize());
 		
 		setLayout(new MigLayout());
 		
-		leftSide = new LeftSidePanel();
+		leftSide = new LeftSidePanel(isConnecting);
 		rightSide = new ChatSidePanel();
 		rightSide.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(leftSide, "pushx, growx, pushy, growy");
@@ -57,8 +59,24 @@ public class MasterLayoutFrame extends JFrame{
 		rightSide.refresh();
 	}
 	
+	public Canvas getCanvas(){
+		return leftSide.getCanvas();
+	}
+	
+	public void setChatViewerText(String text){
+		
+	}
+	
+	public void setScore(String playerName, int score){
+		
+	}
+	
+	public void getLobbyTextPane(){
+		
+	}
+	
 	public static void main(String[] args) throws IOException {
-		MasterLayoutFrame master = new MasterLayoutFrame();
+		MasterLayoutFrame master = new MasterLayoutFrame(true);
 		master.setVisible(true);
 		master.setDrawer(true);
 		master.refresh();
