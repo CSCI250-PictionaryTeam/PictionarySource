@@ -8,17 +8,19 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.swing.JTextPane;
 
+import dataAndThreads.QueueHolder;
+
 import GUI.MasterLayoutFrame;
 
 public class ModifiedReceiverThread {
-	private ArrayBlockingQueue<String> chatQueue;
-	private ArrayBlockingQueue<String> updateQueue;
+//	private ArrayBlockingQueue<String> chatQueue;
+//	private ArrayBlockingQueue<String> updateQueue;
+	private QueueHolder data;
 	private Socket Connection;
 	private boolean going;
 
-	public ModifiedReceiverThread(ArrayBlockingQueue<String> chatQueue, ArrayBlockingQueue<String> updateQueue, MasterLayoutFrame gui, Socket Connection) throws IOException, InterruptedException {
-		this.chatQueue = chatQueue;
-		this.updateQueue = updateQueue;
+	public ModifiedReceiverThread(QueueHolder data, MasterLayoutFrame gui, Socket Connection) throws IOException, InterruptedException {
+		this.data = data;
 		this.Connection = Connection;
 		this.going = true;
 		BufferedReader responses = new BufferedReader(new InputStreamReader(Connection.getInputStream()));
@@ -36,11 +38,11 @@ public class ModifiedReceiverThread {
 	}
 	private void categorizeLine(String line) throws InterruptedException{
 		if(isDrawUpdate(line)){
-			updateQueue.put(line);
+			data.addDrawString(line);
 		}else if(isChatUpdate(line)){
-			updateQueue.put(line);
+			data.addChatString(line);
 		}else if(isResponseUpdate(line)){
-			
+			//EDIT THIS, get our nomenclature straight
 		}
 	}
 	private boolean isDrawUpdate(String line){

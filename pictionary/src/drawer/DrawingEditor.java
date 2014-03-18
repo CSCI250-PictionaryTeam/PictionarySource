@@ -186,6 +186,9 @@ public class DrawingEditor extends JPanel {
 	private class Clearer implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			view.clear();
+			Updater u = pen.getUpdater();
+			u.addPoint(new DrawPoint(250,250,900,Color.white));
+			u.readyUp();
 		}
 	}
 	

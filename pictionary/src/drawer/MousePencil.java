@@ -46,7 +46,6 @@ public class MousePencil implements MouseListener, MouseMotionListener {
 		}
 		return point;
 	}
-
 	@Override
 	public void mouseReleased(MouseEvent e){
 		System.out.println("released");
@@ -73,5 +72,8 @@ public class MousePencil implements MouseListener, MouseMotionListener {
 		DrawPoint point = prepPoint(e.getPoint());
 		update.addPoint(point);
 		v.repaint();
+	}
+	public Updater getUpdater(){
+		return update;
 	}
 }

@@ -7,12 +7,14 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.swing.JTextPane;
 
+import dataAndThreads.QueueHolder;
+
 import GUI.MasterLayoutFrame;
 
 public class ModifiedReceiver {
 	private ServerSocket accepter;
-	private ReceiverThread receiverThread;
-	private ArrayBlockingQueue<String> chatQueue,updateQueue;
+	private ModifiedReceiverThread receiverThread;
+	private QueueHolder queues;
 	private MasterLayoutFrame GUIBoss;
 	private JTextPane chatBox;
 	private final int port = 8888;
@@ -27,9 +29,7 @@ public class ModifiedReceiver {
 	// and game state messages get preceded with  :3:string
 	
 	public ModifiedReceiver(MasterLayoutFrame GUIBoss) throws IOException {
-		this.chatQueue = chatQueue;
-		this.chatBox = chatBox;
-//		chatBox = GUIBoss.getchatbox
+//		queues = 
 		accepter = new ServerSocket(port);
 		System.out.println("Server IP address: " + accepter.getInetAddress());
 	}
@@ -38,7 +38,7 @@ public class ModifiedReceiver {
 		for (;;) {
 			Socket s = accepter.accept();
 			System.out.println("Connection accepted from " + s.getInetAddress());
-			receiverThread = new ModifiedReceiverThread(chatQueue, updateQueue, GUIBoss, s);
+			receiverThread = new ModifiedReceiverThread(queues, GUIBoss, s);
 		}
 	}
 
