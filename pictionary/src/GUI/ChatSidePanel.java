@@ -1,4 +1,5 @@
 package GUI;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -7,12 +8,15 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -35,6 +39,9 @@ public class ChatSidePanel extends JPanel implements Runnable{
 	protected DataOutputStream o;
 	private ArrayBlockingQueue<String> chatQueue;
 	private ChatThread chatter;
+	private JTextArea timerText;
+	static int timeRemaining;
+	static Timer timer;
 //	private ArrayList<String> chatLog;
 	
 	public ChatSidePanel() throws IOException{
@@ -58,6 +65,14 @@ public class ChatSidePanel extends JPanel implements Runnable{
 		
 		chatViewArea.setText("Welcome to the game!" + "\n" + "player1: this is the chat log" + "\n" + "player2: This is sort of what it should look like" + "\n");
 		
+		timerText = new JTextArea();
+		timerText.setText("0");
+		timerText.setEditable(false);
+		Color black = new Color(255,255,255);
+		timerText.setBorder(BorderFactory.createLineBorder(black));
+		timerText.setPreferredSize(new Dimension(25,25));
+		
+		add(timerText);
 		add(chatScrollPane);
 		add(chatEntryField);
 	}
@@ -100,7 +115,43 @@ public class ChatSidePanel extends JPanel implements Runnable{
 		@Override
 		public void keyTyped(KeyEvent arg0) {}
 	}
+	
+	public void startStopwatch(int seconds){
+		int firstTimeDelay = 1000; //magic 1000 is one second
+		int period = 1000;
+		timer = new Timer();
+		timeRemaining = seconds;
+		timer.scheduleAtFixedRate(new TimerTask() {
+			public void run() {
+				timeRemaining = timeRemaining - 1;
+				timerText.setText(getTimeString());
+				checkFinish();
+			}
+		}, firstTimeDelay, period);
+	}
+	
+	public void checkFinish() {
+		if (timeRemaining == 0)
+			stopTimer();
+	}
 
+	public void stopTimer(){
+		timer.cancel();
+		timerText.setText("0");
+	}
+	
+	public static String getTimeString() {
+		String string = Integer.toString(timeRemaining);
+		return string;
+	}
+	
+	public static int getTimeRemaining(){
+		return timeRemaining;
+	}
+	
+	public void setTimeRemaining(int seconds){
+		timeRemaining = seconds;
+	}
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
